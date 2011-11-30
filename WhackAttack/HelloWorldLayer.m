@@ -38,7 +38,6 @@ NSMutableArray *sprites;
 	// Apple recommends to re-assign "self" with the "super" return value
 	if( (self=[super init])) {
 		[self initWithHoles:10];
-    
 	}
 	return self;
 }
@@ -46,20 +45,14 @@ NSMutableArray *sprites;
 // on "init" you need to initialize your instance
 -(id) initWithHoles:(int)numHoles
 {
-	// always call "super" init
-	// Apple recommends to re-assign "self" with the "super" return value
-	if( (self=[super init])) {
-    CCSprite *hole;
-    holes = [[NSMutableArray alloc] init];
-		for (int i = 0; i < numHoles; i++) {
-      [holes addObject:[CCSprite spriteWithFile: @"hole.png"]];
-      hole = (CCSprite*)[holes lastObject];
-      hole.position = ccp([self randomXPositionAtCount:i], [self randomYPosition]);
-      [self addChild:hole];
-    }
-    
-	}
-	return self;
+  CCSprite *hole;
+  holes = [[NSMutableArray alloc] init];
+  for (int i = 0; i < numHoles; i++) {
+    [holes addObject:[CCSprite spriteWithFile: @"hole.png"]];
+    hole = (CCSprite*)[holes lastObject];
+    hole.position = ccp([self randomXPositionAtCount:i], [self randomYPosition]);
+    [self addChild:hole];
+  }
 }
                            
 -(int) randomXPositionAtCount:(int)counter
@@ -67,21 +60,21 @@ NSMutableArray *sprites;
   int randX;
   switch (counter % 4) {
     case 0:
-      randX = arc4random() % 160;
+      randX = arc4random() % 160 + 10;
       break;
     case 1:
-      randX = arc4random() % 160 + 160;
+      randX = arc4random() % 160 + 170;
       break;
     case 2:
-      randX = arc4random() % 160 + 320;
+      randX = arc4random() % 160 + 330;
       break;
     case 3:
       randX = arc4random() % 160 + 480;
       break;
     default:
       break;
-  return randX;
   }
+  return randX;
 }
 
 -(int) randomYPosition
