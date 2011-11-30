@@ -10,6 +10,9 @@
 // Import the interfaces
 #import "HelloWorldLayer.h"
 
+NSMutableArray *holes;
+NSMutableArray *sprites; 
+
 // HelloWorldLayer implementation
 @implementation HelloWorldLayer
 
@@ -34,20 +37,33 @@
 	// always call "super" init
 	// Apple recommends to re-assign "self" with the "super" return value
 	if( (self=[super init])) {
-		
-		// create and initialize a Label
-		CCLabelTTF *label = [CCLabelTTF labelWithString:@"Hello World!" fontName:@"Marker Felt" fontSize:64];
-
-		// ask director the the window size
-		CGSize size = [[CCDirector sharedDirector] winSize];
-	
-		// position the label on the center of the screen
-		label.position =  ccp( size.width /2 , size.height/2 );
-		
-		// add the label as a child to this Layer
-		[self addChild: label];
+		[self initWithHoles:3];
+    
 	}
 	return self;
+}
+
+// on "init" you need to initialize your instance
+-(id) initWithHoles:(int)numHoles
+{
+	// always call "super" init
+	// Apple recommends to re-assign "self" with the "super" return value
+	if( (self=[super init])) {
+    CCSprite *hole;
+		for (int i = 0; i < numHoles; i++) {
+      [holes addObject:[CCSprite spriteWithFile: @"hole.png"]];
+      hole = (CCSprite*)[holes lastObject];
+      hole.position = ccp( 50, 100 );
+      [self addChild:hole];
+    }
+    
+	}
+	return self;
+}
+
+-(NSArray *) randomPosition:(int)numHoles
+{
+  
 }
 
 // on "dealloc" you need to release all your retained objects
