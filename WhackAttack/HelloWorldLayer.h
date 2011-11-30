@@ -17,5 +17,9 @@
 
 // returns a CCScene that contains the HelloWorldLayer as the only child
 +(CCScene *) scene;
+-(NSMutableArray *) randomPositions:(int)numHoles;
+-(int) randomXPositionAtCount:(int)counter;
+-(int) randomYPosition;
+
 
 @end

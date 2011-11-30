@@ -37,7 +37,7 @@ NSMutableArray *sprites;
 	// always call "super" init
 	// Apple recommends to re-assign "self" with the "super" return value
 	if( (self=[super init])) {
-		[self initWithHoles:3];
+		[self initWithHoles:10];
     
 	}
 	return self;
@@ -50,20 +50,43 @@ NSMutableArray *sprites;
 	// Apple recommends to re-assign "self" with the "super" return value
 	if( (self=[super init])) {
     CCSprite *hole;
+    holes = [[NSMutableArray alloc] init];
 		for (int i = 0; i < numHoles; i++) {
       [holes addObject:[CCSprite spriteWithFile: @"hole.png"]];
       hole = (CCSprite*)[holes lastObject];
-      hole.position = ccp( 50, 100 );
+      hole.position = ccp([self randomXPositionAtCount:i], [self randomYPosition]);
       [self addChild:hole];
     }
     
 	}
 	return self;
 }
-
--(NSArray *) randomPosition:(int)numHoles
+                           
+-(int) randomXPositionAtCount:(int)counter
 {
-  
+  int randX;
+  switch (counter % 4) {
+    case 0:
+      randX = arc4random() % 160;
+      break;
+    case 1:
+      randX = arc4random() % 160 + 160;
+      break;
+    case 2:
+      randX = arc4random() % 160 + 320;
+      break;
+    case 3:
+      randX = arc4random() % 160 + 480;
+      break;
+    default:
+      break;
+  return randX;
+  }
+}
+
+-(int) randomYPosition
+{
+  return arc4random() % 480;
 }
 
 // on "dealloc" you need to release all your retained objects
