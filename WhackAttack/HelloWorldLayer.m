@@ -43,7 +43,7 @@ NSMutableArray *sprites;
 }
 
 // on "init" you need to initialize your instance
--(id) initWithHoles:(int)numHoles
+-(void) initWithHoles:(int)numHoles
 {
   CCSprite *hole;
   holes = [[NSMutableArray alloc] init];
@@ -60,16 +60,16 @@ NSMutableArray *sprites;
   int randX;
   switch (counter % 4) {
     case 0:
-      randX = arc4random() % 160 + 10;
+      randX = arc4random() % 120 + 10;
       break;
     case 1:
-      randX = arc4random() % 160 + 170;
+      randX = arc4random() % 120 + 130;
       break;
     case 2:
-      randX = arc4random() % 160 + 330;
+      randX = arc4random() % 120 + 250;
       break;
     case 3:
-      randX = arc4random() % 160 + 480;
+      randX = arc4random() % 120 + 370;
       break;
     default:
       break;
@@ -79,7 +79,7 @@ NSMutableArray *sprites;
 
 -(int) randomYPosition
 {
-  return arc4random() % 480;
+  return arc4random() % 320;
 }
 
 // on "dealloc" you need to release all your retained objects
