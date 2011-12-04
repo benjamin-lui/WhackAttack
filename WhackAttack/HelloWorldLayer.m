@@ -38,6 +38,7 @@ NSMutableArray *sprites;
 	// Apple recommends to re-assign "self" with the "super" return value
 	if( (self=[super init])) {
 		[self initWithHoles:10];
+    [self schedule:@selector(tryPop:) interval:0.5];
 	}
 	return self;
 }
@@ -47,8 +48,10 @@ NSMutableArray *sprites;
 {
   CCSprite *hole;
   holes = [[NSMutableArray alloc] init];
+  sprites = [[NSMutableArray alloc] init];
   for (int i = 0; i < numHoles; i++) {
     [holes addObject:[CCSprite spriteWithFile: @"hole.png"]];
+    [sprites addObject:[CCSprite spriteWithFile: @"chipmunk.png"]];
     hole = (CCSprite*)[holes lastObject];
     hole.position = ccp([self randomXPositionAtCount:i], [self randomYPosition]);
     [self addChild:hole];
@@ -57,19 +60,19 @@ NSMutableArray *sprites;
                            
 -(int) randomXPositionAtCount:(int)counter
 {
-  int randX;
+  int xPos;
   switch (counter % 4) {
     case 0:
-      randX = arc4random() % 120 + 10;
+      xPos = arc4random() % 120 + 10;
       break;
     case 1:
-      randX = arc4random() % 120 + 130;
+      xPos = arc4random() % 120 + 130;
       break;
     case 2:
-      randX = arc4random() % 120 + 250;
+      xPos = arc4random() % 120 + 250;
       break;
     case 3:
-      randX = arc4random() % 120 + 370;
+      xPos = arc4random() % 120 + 370;
       break;
     default:
       break;
@@ -80,6 +83,30 @@ NSMutableArray *sprites;
 -(int) randomYPosition
 {
   return arc4random() % 320;
+}
+
+-(void) tryPop
+{
+  for (CCSprite *sprite in sprites) {
+    if (arc4random() % 3 == 0) {
+      if (sprite.numberOfRunningActions == 0) {
+        [self spritePopup:sprite];
+      }
+    }
+  }
+}
+
+-(void) spritePopup:(CCSprite*) sprite
+{
+  id wait2seconds = [CCDelayTime actionWithDuration:2];
+  id waitRandomTime = [CCDelayTime actionWithDuration:arc4random()%3];
+  
+  id hideAction = [CCHide action];
+  id showAction = [CCShow action];
+  id sequence = [CCSequence actions: wait2seconds,hideAction,waitRandomTime,showAction,nil];
+  
+  
+  [sprite runAction: sequence];
 }
 
 // on "dealloc" you need to release all your retained objects
